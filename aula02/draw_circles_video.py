@@ -64,7 +64,8 @@ while(True):
 
     if circles is not None:        
         circles = np.uint16(np.around(circles))
-        for i in circles[0,:]:
+        circles = circles[0]
+        for i in circles:
             print(i)
             # draw the outer circle
             # cv2.circle(img, center, radius, color[, thickness[, lineType[, shift]]])
@@ -72,14 +73,21 @@ while(True):
             # draw the center of the circle
             cv2.circle(bordas_color,(i[0],i[1]),2,(0,0,255),3)
 
-    # Draw a diagonal blue line with thickness of 5 px
-    # cv2.line(img, pt1, pt2, color[, thickness[, lineType[, shift]]])
-    cv2.line(bordas_color,(0,0),(511,511),(255,0,0),5)
+            if len(circles) > 1:
+                circulo1 = circles[0]
+                circulo2 = circles[1]
+            else:
+                circulo1 = circles[0]
+                circulo2 = circulo1
 
-    # cv2.rectangle(img, pt1, pt2, color[, thickness[, lineType[, shift]]])
-    cv2.rectangle(bordas_color,(384,0),(510,128),(0,255,0),3)
+            
+            try:
+                cv2.line(bordas_color,(circulo1[0], circulo1[1]), (circulo2[0], circulo2[1]), (0,0,255), 3)
 
-    # cv2.putText(img, text, org, fontFace, fontScale, color[, thickness[, lineType[, bottomLeftOrigin]]])
+            except:
+                pass
+
+            
     font = cv2.FONT_HERSHEY_SIMPLEX
     cv2.putText(bordas_color,'Press q to quit',(0,50), font, 1,(255,255,255),2,cv2.LINE_AA)
 
